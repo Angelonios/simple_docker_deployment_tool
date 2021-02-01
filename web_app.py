@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template
 import os
+import asyncio
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'supekeyr'
 
 @app.route('/')
 def docker_file_form():
@@ -11,31 +11,31 @@ def docker_file_form():
 
 @app.route('/', methods=['GET', 'POST'])
 def docker_file_form_post():
-    print("hey")
-    print(request.method)
-    print(request.form.get('image_name'))
-    print(request.form.get('github_repo'))
-    print(request.form.get('source_folder'))
-    print(request.form.get('source_folder_image'))
-    print(request.form.get('port'))
-    if request.method == 'POST':
-        image_name = request.form.get('image_name')
-        github_repo = request.form.get('github_repo')
-        source_folder = request.form.get('source_folder')
-        source_folder_image = request.form.get('source_folder_image')
-        port = request.form.get('port')
-        # sync_files = request.form['sync_files']
-        # sync_files_path = request.form['sync_files_path']
+    github_repo = request.form.get('github_repo')
+    image_name = request.form.get('image_name')
+    image_version = request.form.get('image_version')
+    host_port = request.form.get('host_port')
+    container_port = request.form.get('container_port')
+    dockerfile_content = request.form.get('dockerfile')
 
-        os.system("git clone " + github_repo)
-        os.system("cd " + github_repo.split("/")[-1].split(".")[0])
-        os.system("touch Dockerfile")
-        os.system("echo 'FROM: " + image_name + "' >> Dockerfile")
-        os.system("echo 'CODE: " + source_folder + " " + source_folder_image + "' >> Dockerfile")
-        os.system("echo 'EXPOSE: " + port + "' >> Dockerfile")
+    #path where deployment app is
+    dev_path = "/home/ubuntu/dev_enviroment/simple_docker_deployment_tool/"
+    #path of folder containing src & dockerfile
+    service_path = dev_path + github_repo.split("/")[-1].split(".")[0]
+    #path of dockerfile
+    dockerfile_path = service_path + "/dockerfile"
+    
+    if request.method == 'POST':
+        os.system("git clone " + github_repo + " " + service_path)
+        os.system("touch " + dockerfile_path)
+        dockerfile = open(dockerfile_path, "w")
+        dockerfile.writelines(dockerfile_content)
+        os.system("docker build -t " + image_name + ":" + image_version + " " + service_path)
+        os.system("docker build -t " + image_name + ":" + image_version + " " + service_path)
+        os.system("docker run -it -d -p " + host_port + ":" + container_port + " " + image_name)
         return "thanks"
     else:
         return "no thanks"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
