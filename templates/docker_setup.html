@@ -9,7 +9,7 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"></script>
     <style>
-      .centered-column {
+        .centered-column {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -27,42 +27,47 @@
         <div class="col-lg-6">
             <form method="post">
                 <div class="form-outline mb-4 hover-shadow border rounded">
-                    <input type="text" id="gth" class="form-control active" name="github_repo" value="https://github.com/Angelonios/docker_php_image_test" required/>
+                    <input type="text" id="gth" class="form-control active" name="github_repo"
+                           value="https://github.com/Angelonios/docker_php_image_test" required/>
                     <label class="form-label" for="gth">GitHub repository link</label>
                 </div>
                 <div class="container">
-                	<div class="row">
-     	                	<div class="col-6">
-	     	                	<div class="form-outline mb-4 hover-shadow border rounded">
-					    <input type="text" id="img" class="form-control active" name="image_name" value="php_test" required/>
-					    <label class="form-label" for="img">Image name</label>
-					</div>
-     	                	</div>
-	                	<div class="col-6">
-	        			<div class="form-outline mb-4 hover-shadow border rounded">
-					    <input type="text" id="imv" class="form-control active" name="image_version" value="latest" required/>
-					    <label class="form-label" for="imv">Image version</label>
-					</div>        	
-	                	</div>
-                	</div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-outline mb-4 hover-shadow border rounded">
+                                <input type="text" id="img" class="form-control active" name="image_name"
+                                       value="php_test" required/>
+                                <label class="form-label" for="img">Image name</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-outline mb-4 hover-shadow border rounded">
+                                <input type="text" id="imv" class="form-control active" name="image_version"
+                                       value="latest" required/>
+                                <label class="form-label" for="imv">Image version</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="container">
-                	<div class="row">
-     	                	<div class="col-6">
-     	                		<div class="form-outline mb-4 hover-shadow border rounded rounded">
-					    <input type="text" id="hpt" class="form-control active" name="host_port" value="8888" required/>
-					    <label class="form-label" for="hpt">Host port</label>
-					</div>
-     	                	</div>
-	                	<div class="col-6">
-	                	        <div class="form-outline mb-4 hover-shadow border rounded rounded">
-					    <input type="text" id="cpt" class="form-control active" name="container_port" value="80" required/>
-					    <label class="form-label" for="cpt">Container port</label>
-					</div>
-	                	</div>
-                	</div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-outline mb-4 hover-shadow border rounded rounded">
+                                <input type="text" id="hpt" class="form-control active" name="host_port" value="8888"
+                                       required/>
+                                <label class="form-label" for="hpt">Host port</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-outline mb-4 hover-shadow border rounded rounded">
+                                <input type="text" id="cpt" class="form-control active" name="container_port" value="80"
+                                       required/>
+                                <label class="form-label" for="cpt">Container port</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
+
                 <div class="form-outline mb-4 hover-shadow border rounded rounded">
                     <textarea id="dcf" class="form-control" rows="10" name="dockerfile active" required>FROM php:7.3.3-apache
 RUN apt-get update && apt-get upgrade -y

@@ -6,85 +6,165 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet"/>
-    <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"></script>
     <style>
-      .centered-column {
+        .centered-column {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
     </style>
 </head>
-<body class="">
+<body>
 <div class="container my-5">
     <div class="row centered-column">
-        <div class="col-lg-6 text-center">
+        <div class="col-12 text-center">
             <h1>Browse available images</h1>
         </div>
     </div>
     <div class="row centered-column">
-        <div class="col-12">
-            <nav class="navbar navbar-light bg-light">
-                <div class="container-fluid">
-                    <span class="navbar-brand">Docker Images Options</span>
-                    <form class="d-flex input-group w-auto">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Name tag"
-                        aria-label="Name tag"/>
-                      <div class="form-check form-check-inline">
-                          <label class="form-check-label" for="all_option_id">Select all images</label>
-                          <input class="form-check-input" type="checkbox" id="all_option_id" value="all_option" />
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <label class="form-check-label" for="digest_option_id">Show digest</label>
-                          <input class="form-check-input" type="checkbox" id="digest_option_id" value="digest_option" />
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <label class="form-check-label" for="filter_option_id">Use filter</label>
-                          <input class="form-check-input" type="checkbox" id="filter_option_id" value="filter_option" />
-                      </div>
-                      <input
-                        type="checkbox"
-                        class="form-control"
-                        aria-label
-                        />
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Name tag"
-                        aria-label="Name tag"/>
-
-
-
-
-                      <button
-                        class="btn btn-outline-primary"
-                        type="button"
-                        data-mdb-ripple-color="dark">
-                        Search
-                      </button>
-                    </form>
+        <div class="col-7 align-self-center text-center">
+            <form method="GET" action="#">
+                <div class="row mb-2">
+                    <div class="col-5">
+                        <!-- Name tag input -->
+                        <div class="form-outline">
+                            <input type="text"
+                                   id="name_tag_id"
+                                   class="form-control border rounded"
+                                   name="name_tag"/>
+                            <label class="form-label" for="name_tag_id">Name tag</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- All option input -->
+                        <div class="form-check form-switch d-inline-block ">
+                            <input class="form-check-input" type="checkbox" id="all_option_id"
+                                   name="all_option"/>
+                            <label class="form-check-label" for="all_option_id">--all</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Digest option input -->
+                        <div class="form-check form-switch d-inline-block ">
+                            <input class="form-check-input" type="checkbox" id="digest_option_id"
+                                   name="digest_option"/>
+                            <label class="form-check-label" for="digest_option_id">--digest</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- No-trunc option input -->
+                        <div class="form-check form-switch d-inline-block ">
+                            <input class="form-check-input" type="checkbox" id="no_trunc_option_id"
+                                   name="no_trunc_option"/>
+                            <label class="form-check-label" for="no_trunc_option_id">--no-trunc</label>
+                        </div>
+                    </div>
                 </div>
-            </nav>
+                <div class="row mb-2">
+                    <div class="col-6 ps-0">
+                        <div class="form-check form-switch d-inline-block me-3">
+                            <input class="form-check-input" type="checkbox" id="filter_option_id"
+                                   onclick="{
+                                        const filterInput = document.getElementById('filter_rule_id');
+                                        filterInput.disabled = !this.checked;
+                                        filterInput.required = this.checked;
+                                    }"
+                                   name="filter_option"/>
+                            <label class="form-check-label" for="filter_option_id">--filter</label>
+                        </div>
+                        <div class="form-outline d-inline-block">
+                            <input type="text"
+                                   id="filter_rule_id"
+                                   class="form-control border rounded"
+                                   name="filter_rule"
+                                   onblur="{
+                                        if((this.value === '')){
+                                            document.getElementById('filter_option_id').checked = false;
+                                            this.disabled = true;
+                                            this.required = false;
+                                        }
+                                   }"
+                                   disabled/>
+                            <label class="form-label" for="filter_rule_id">Filter rule</label>
+                        </div>
+                    </div>
+                    <div class="col-6 pe-0">
+                        <div class="form-check form-switch d-inline-block me-3">
+                            <input class="form-check-input" id="format_option_id"
+                                   onclick="{
+                                        const formatInput = document.getElementById('format_rule_id');
+                                        formatInput.disabled = !this.checked;
+                                        formatInput.required = this.checked;
+                                    }"
+                                   type="checkbox"
+                                   name="format_option"/>
+                            <label class="form-check-label" for="format_option_id">--format</label>
+                        </div>
+                        <div class="form-outline d-inline-block">
+                            <input type="text"
+                                   id="format_rule_id"
+                                   class="form-control border rounded"
+                                   name="format_rule"
+                                   onblur="{
+                                        if((this.value === '')){
+                                            document.getElementById('format_option_id').checked = false;
+                                            this.disabled = true;
+                                            this.required = false;
+                                        }
+                                   }"
+                                   disabled/>
+                            <label class="form-label" for="format_rule_id">Format rule</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button
+                                class="btn btn-outline-primary"
+                                type="submit"
+                                data-mdb-ripple-color="dark">
+                            Refresh Image List
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="row centered-column">
-        <div class="col-lg-6">
-            <div id="datatable">
-            </div>
+    <div class="row">
+        <div class="col-12">
+            {% if docker_info is not undefined %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        {% for column in docker_info['header'] %}
+                            <th scope="col">{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in docker_info['rows'] %}
+                        <tr>
+                            {% for cell in row %}
+                                <form class="ajax">
+                                    <td>{{ cell }}</td>
+                                </form>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else: %}
+                <span class="alert-danger">Data is not loaded</span>
+            {% endif %}
         </div>
     </div>
 </div>
 </body>
 <script>
-    const docker_images_info = {{docker_images_info ? docker_images_info :
-        {{
-            columns: ['REPOSITORY', 'TAG', 'IMAGE ID', 'CREATED', 'SIZE'],
-        }}
-    }}
-    new mdb.Datatable(document.getElementById("datatable"), {{docker_images_info}})
+    $('form.ajax').on('submit', function(){
+
+        return false;
+    })
 </script>
 </html>
