@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Docker compose webapp{% endblock %}
+{% block heading %}Docker compose webapp{% endblock %}
+{% block menu %}
+    <div class="col-12">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left links -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('deploy_app_controller.docker_file_form') }}">Deploy app</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('docker_images_controller.list_images') }}">Manage docker images</a>
+                        </li>
+
+                    </ul>
+                    <!-- Left links -->
+                </div>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
