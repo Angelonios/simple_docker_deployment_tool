@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Remote docker compose{% endblock %}
+{% block heading %}Build app from github on remote server using docker-compose{% endblock %}
+{% block menu %}
+    <div class="col-lg-6">
+        <form method="get">
+            <div class="form-outline mb-4 hover-shadow border rounded">
+                <input type="text" id="gth" class="form-control active" name="git_repo" required/>
+                <label class="form-label" for="gth">GitHub repository link</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mb-4 hover-shadow">Deploy service</button>
+        </form>
+        {% if docker_data is not undefined %}
+            <div>It works!</div>
+        {% endif %}
+    </div>
+{% endblock %}

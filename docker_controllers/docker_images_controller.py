@@ -30,7 +30,7 @@ DOCKER_RMI_ARGS = {
 }
 
 
-@docker_images_controller.route('/')
+@docker_images_controller.route('/', methods=['GET', 'POST'])
 def list_images():
     if request.method == 'GET':
         if len(request.args) == 0:
