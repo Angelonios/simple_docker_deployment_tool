@@ -1,17 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Remote docker compose{% endblock %}
-{% block heading %}Build app from github on remote server using docker-compose{% endblock %}
+{% block heading %}Enter your github repository{% endblock %}
 {% block menu %}
     <div class="col-lg-6">
-        <form method="get">
+        <form method="post">
             <div class="form-outline mb-4 hover-shadow border rounded">
                 <input type="text" id="gth" class="form-control active" name="git_repo" required/>
                 <label class="form-label" for="gth">GitHub repository link</label>
             </div>
             <button type="submit" class="btn btn-primary btn-block mb-4 hover-shadow">Deploy service</button>
         </form>
-        {% if docker_data is not undefined %}
-            <div>It works!</div>
-        {% endif %}
     </div>
+{% endblock %}
+{% block output %}
+    <div class="col-lg-12">
+        {% if docker_error is not undefined %}
+            <h3 class="alert-danger">!Error!</h3>
+            {% for error in docker_error %}
+                <pre>{{ error }}</pre>
+            {% endfor %}
+        {% endif %}
+        <div class="logging_window">
+            <pre id="output"></pre>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const output = document.getElementById('output')
+        const url = 'docker_compose_controller.remote_docker_compose';
+        const response = await fetch(url);
+        const reader = response.body.getReader();
+        while(true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            console.log('Received', value)
+            output.textContent = value
+        }
+    </script>
 {% endblock %}
